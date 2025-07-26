@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Weather Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="top-bar">
+            <div class="search-container">
+                <input type="text" id="citySearch" placeholder="Search city..." onkeydown="if(event.key === 'Enter') searchWeather()">
+                <button class="search-btn" onclick="searchWeather()">
+                    <i class="material-icons">search</i>
+                </button>
+                <button class="voice-btn" onclick="startVoiceRecognition()">
+                    <i class="material-icons">mic</i>
+                </button>
+                <button class="location-btn" onclick="getCurrentLocation()">
+                    <i class="material-icons">my_location</i>
+                </button>
+            </div>
+            <div class="time-display">
+                <div class="current-time" id="currentTime">--:-- --</div>
+                <div class="current-date" id="currentDate">-- -- --</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="left-column">
+                <div class="weather-summary card">
+                    <h2>Weather Forecast</h2>
+                    <div class="current-condition" id="currentCondition">--</div>
+                    
+                    <div class="current-detail details-grid">
+                        <div class="stat-item">
+                            <span class="stat-label">Humidity</span>
+                            <span class="stat-value" id="humidity">--%</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Wind</span>
+                            <span class="stat-value" id="windSpeed">-- Km/h</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Visibility</span>
+                            <span class="stat-value" id="visibility">-- Km</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Pressure</span>
+                            <span class="stat-value" id="pressure">-- hPa</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Sunrise</span>
+                            <span class="stat-value" id="sunrise">--:-- AM</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Sunset</span>
+                            <span class="stat-value" id="sunset">--:-- PM</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">UV Index</span>
+                            <span class="stat-value" id="uvIndex">--</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">AQI</span>
+                            <span class="stat-value" id="aqi">--</span>
+                        </div>
+                    </div>
+                    
+                    <div class="hourly-forecast">
+                        <h3>Hourly Forecast (Next 24h)</h3>
+                        <div class="chart-container">
+                            <canvas id="hourlyChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="location-info card">
+                    <div class="location-tag" id="locationTag">Location: --</div>
+                    <div class="daily-message glassmorphism-effect" id="dailyMessage">
+                        <i class="material-icons">info</i>
+                        <span id="messageText">Loading daily tip...</span>
+                    </div>
+                    <div class="clothing-advice glassmorphism-effect" id="clothingAdvice">
+                        <i class="material-icons">checkroom</i>
+                        <span id="adviceText">Loading clothing advice...</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <div class="current-weather card" id="currentWeatherCard">
+                    <div class="location" id="location">--, --</div>
+                    <div class="current-temp-container">
+                        <img id="currentWeatherIcon" src="" alt="Weather Icon" class="current-weather-icon">
+                        <span class="current-temp" id="currentTemp">--° C</span>
+                    </div>
+                    <div class="feels-like" id="feelsLike">Feels like --°</div>
+                    <div class="current-desc" id="currentDesc">--</div>
+                </div>
+
+                <div class="forecast-tabs card">
+                    <div class="tab-header">
+                        <h3>5-Day Forecast</h3>
+                        <div class="unit-toggle" id="unitToggle" onclick="toggleTemperatureUnit()">Celsius</div>
+                    </div>
+                    
+                    <div class="forecast-list" id="forecastList">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="forecastModal" class="modal">
+        <div class="modal-content card">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h3 id="modalTitle">Hourly Forecast for --</h3>
+            <div id="modalHourlyList" class="modal-hourly-list">
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
